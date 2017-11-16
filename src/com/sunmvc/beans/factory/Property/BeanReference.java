@@ -14,7 +14,9 @@ public class BeanReference {
             this.name = name;
         }
 
-
+    public BeanReference(Object bean){
+        this.bean = bean;
+    }
         public String getName() {
             return name;
         }

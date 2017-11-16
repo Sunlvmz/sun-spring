@@ -18,16 +18,18 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 public class AnnotationBeanDefinitionReader extends XmlBeanDefinitionReader {
+
     public AnnotationBeanDefinitionReader(BeanDefinitionRegistry registry) {
         super(registry);
     }
 
+
     @Override
-    public int loadBeanDefinitions(Resource resource) throws ParserConfigurationException, SAXException, IOException {
+    public int loadBeanDefinitions(Resource resource) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException {
         return doLoadBeanDefinitionsfromAnnotation(resource);
     }
 
-    private int doLoadBeanDefinitionsfromAnnotation(Resource resource) throws IOException, SAXException, ParserConfigurationException {
+    private int doLoadBeanDefinitionsfromAnnotation(Resource resource) throws IOException, SAXException, ParserConfigurationException, ClassNotFoundException {
         int count = super.doLoadBeanDefinitions(resource);
         List<String> packageNames = XmlParser.getComponentPackageNames();
         if (!packageNames.isEmpty()) {
@@ -39,11 +41,7 @@ public class AnnotationBeanDefinitionReader extends XmlBeanDefinitionReader {
                         BeanDefinition beanDefinition = new DefaultBeanDefinition();
                         // 获得beanDefinition的beanClass
                         Class<?> beanClass = null;
-                        try {
-                            beanClass = Class.forName(ClassName);
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
+                        beanClass = Class.forName(ClassName);
                         // 验证是否有Component注解
                         Component com = beanClass.getAnnotation(Component.class);
                         if (com != null) {
@@ -58,15 +56,16 @@ public class AnnotationBeanDefinitionReader extends XmlBeanDefinitionReader {
                                         BeanDefinition autoWiredBeanDefinition = new BeanDefinition();
                                         autoWiredBeanDefinition.setBeanClass(f.getType());
                                         String autoWiredBeanName = f.getType().toString();
-                                        String autoWiredName = getBeanName(autoWiredBeanName);
+                                        String autoWiredName = getStableBeanName(autoWiredBeanName);
+                                        String fieldName = f.getName();
                                         beanDefinitionMap.put(autoWiredName, autoWiredBeanDefinition); // todo  result
-//                                        BeanReference beanReference = new BeanReference(f.getType());
-//                                        beanDefinition.getPropertyValues().addPropertyValue(new PropertyValue(autowired.value(), beanReference));
+                                        BeanReference beanReference = new BeanReference(autoWiredName);
+                                        beanDefinition.getPropertyValues().addPropertyValue(new PropertyValue(fieldName, beanReference));// PropertyValue的第一个参数是 filed 的name
                                     }
                                 }
                             }
                             // 默认使用全部小写的方式
-                            String beanDefinitionName = getBeanName(ClassName);
+                            String beanDefinitionName = getStableBeanName(ClassName);
                             beanDefinitionMap.put(beanDefinitionName, beanDefinition);
                             count++;
                         }
@@ -77,7 +76,7 @@ public class AnnotationBeanDefinitionReader extends XmlBeanDefinitionReader {
         return count;
     }
 
-    private String getBeanName(String className) {
+    private String getStableBeanName(String className) {
         return (className.substring(className.lastIndexOf(".") + 1)).toLowerCase();
     }
 }

@@ -36,6 +36,9 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         super(registry);
         this.beanDefinition = beanDefinition;
     }
+
+
+
     @Override
     public int loadBeanDefinitions(Resource resource) throws Exception {
        return doLoadBeanDefinitions(resource);
@@ -49,7 +52,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         // todo 解析bean
         XmlParser xmlParser = new XmlParser(doc, beanDefinitionMap);
         beanDefinitionMap= xmlParser.parse();
-        List packages = xmlParser.getComponentPackageNames();
+//        List packages = xmlParser.getComponentPackageNames();
         // 再次可以选择注入一个什么类
         for (Entry<String, BeanDefinition> beanDefinition : beanDefinitionMap.entrySet()) {
             // 講這個bean進行註冊,這是一個藉口方法，當某個容器需要註冊功能的時候，在繼承這個類

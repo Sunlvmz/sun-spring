@@ -6,7 +6,8 @@ import com.sunmvc.io.source.ResourceLoader;
 
 public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader  {//未实现loadBeanDefiniton方法，所以要加abstract修饰
 
-    protected final BeanDefinitionRegistry registry;
+    protected final BeanDefinitionRegistry registry ; //
+
 
     protected ResourceLoader resourceLoader;
 

@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class AutowireCapableBeanFactory extends DefaultBeanFactory {
+public class AutowireCapableBeanFactory extends DefaultBeanFactory implements BeanDefinitionRegistry{
     private Resource resource;
     /**
      * 增加bean处理程序：
@@ -25,6 +25,7 @@ public class AutowireCapableBeanFactory extends DefaultBeanFactory {
     }
     public AutowireCapableBeanFactory(Resource resource) throws Exception {
         this.resource = resource;
+        refresh();
     }
     public AutowireCapableBeanFactory(String path) throws Exception {
         super(path);
