@@ -7,5 +7,7 @@
     <bean id="outputService" class="com.sunmvc.beans.factory.AnotherServiceImpl">
     </bean>
     <!-- 将会自动扫描该包下所有注解的bean -->
+
     <package-scan packagename="com.sunmvc.beans.factory"></package-scan>
-</beans>
+
+  </beans>

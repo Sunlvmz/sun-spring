@@ -5,7 +5,7 @@ import com.sunmvc.beans.factory.support.BeanDefinitionRegistry;
 import com.sunmvc.beans.factory.support.BeanPostProcessor;
 import com.sunmvc.io.reader.XmlBeanDefinitionReader;
 import com.sunmvc.io.source.Resource;
-import com.sunmvc.io.source.ResourceLoader;
+import com.sunmvc.io.source.FileResourceLoader;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,36 +28,60 @@ public class DefaultBeanFactory implements BeanFactory,BeanDefinitionRegistry{
      */
     private final List<String> beanDefinitionNames = new ArrayList<String>();
 
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
+
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return beanPostProcessors;
+    }
+
+    public Map<String, BeanDefinition> getBeanDefinitionMap() {
+        return beanDefinitionMap;
+    }
+
+    public void setBeanDefinitionMap(Map<String, BeanDefinition> beanDefinitionMap) {
+        this.beanDefinitionMap = beanDefinitionMap;
+    }
+
+    public void setBeanPostProcessors(List<BeanPostProcessor> beanPostProcessors) {
+        this.beanPostProcessors = beanPostProcessors;
+    }
+
     private Resource resource;
     public DefaultBeanFactory( ) {
     }
     public DefaultBeanFactory( Resource resource) throws Exception {
         this.resource = resource;
-        refresh();
+//        refresh();
     }
     public DefaultBeanFactory(String path) throws Exception {
-        ResourceLoader resourceLoader = new ResourceLoader();
-        this.resource = resourceLoader.getFileResource(path); //todo 测试 UrlResource和FileResource的区别
-        refresh();
+        FileResourceLoader fileResourceLoader = new FileResourceLoader();
+        this.resource = fileResourceLoader.getResource(path); //todo 测试 UrlResource和FileResource的区别
+//        refresh();  //这部分逻辑放到ApplicationContext里 单一职责原则
     }
     /*
      * 资源的问题解决了，我们还得具备读取beandefinition的能力,本来是应该继承的容器中就具有了读取的能力，这里为了简便，我们使用内部类实现
      */
     //todo （spring中采用ApplicationContext类继承实现）
-    protected class ResourceReaderBeanFactory extends XmlBeanDefinitionReader {
-        public ResourceReaderBeanFactory(BeanDefinitionRegistry registry) {
-            super(registry);
-        }
-    }
-    // 好了，最后给定一个初始化方法
-    protected void refresh() throws Exception {
-        // 在这里，我们完成容器的初始化
-        // 1.资源我们已经在构造方法中获取
-        // 2.资源的解析
-        int count = new ResourceReaderBeanFactory(this).loadBeanDefinitions(resource);
-        // 3.容器的注册方法会被自动调用，此时注册就完成了
-        System.out.println("一共初注册了" + count + "个beanDefinition");
-    }
+//    protected class ResourceReaderBeanFactory extends XmlBeanDefinitionReader {
+//        public ResourceReaderBeanFactory(BeanDefinitionRegistry registry) {
+//            super(registry);
+//        }
+//    }
+//    // 好了，最后给定一个初始化方法
+//    protected void refresh() throws Exception {
+//        // 在这里，我们完成容器的初始化
+//        // 1.资源我们已经在构造方法中获取
+//        // 2.资源的解析
+//        int count = new ResourceReaderBeanFactory(this).loadBeanDefinitions(resource);
+//        // 3.容器的注册方法会被自动调用，此时注册就完成了
+//        System.out.println("一共初注册了" + count + "个beanDefinition");
+//    }
     /**
      * 增加bean处理程序：
      * 	例如通过AspectJAwareAdvisorAutoProxyCreator#postProcessAfterInitialization()实现AOP的织入

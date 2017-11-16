@@ -25,7 +25,7 @@ public class AutowireCapableBeanFactory extends DefaultBeanFactory implements Be
     }
     public AutowireCapableBeanFactory(Resource resource) throws Exception {
         this.resource = resource;
-        refresh();
+//        refresh();
     }
     public AutowireCapableBeanFactory(String path) throws Exception {
         super(path);
@@ -37,15 +37,15 @@ public class AutowireCapableBeanFactory extends DefaultBeanFactory implements Be
         }
     }
     // 好了，最后给定一个初始化方法
-    @Override
-    protected void refresh() throws Exception {
-        // 在这里，我们完成容器的初始化
-        // 1.资源我们已经在构造方法中获取
-        // 2.资源的解析
-        int count = new AutowireCapableBeanFactory.ResourceReaderBeanFactory(this).loadBeanDefinitions(resource);
-        // 3.容器的注册方法会被自动调用，此时注册就完成了
-        System.out.println("一共初注册了" + count + "个beanDefinition");
-    }
+//    @Override
+//    protected void refresh() throws Exception {
+//        // 在这里，我们完成容器的初始化
+//        // 1.资源我们已经在构造方法中获取
+//        // 2.资源的解析
+//        int count = new AutowireCapableBeanFactory.ResourceReaderBeanFactory(this).loadBeanDefinitions(resource);
+//        // 3.容器的注册方法会被自动调用，此时注册就完成了
+//        System.out.println("一共初注册了" + count + "个beanDefinition");
+//    }
 
     @Override
     public void applyPropertyValues(Object bean, BeanDefinition beanDefinition) throws IllegalAccessException, NoSuchFieldException {

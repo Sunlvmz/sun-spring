@@ -28,6 +28,14 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     private BeanDefinition beanDefinition;
 
 
+    public Map<String, BeanDefinition> getBeanDefinitionMap() {
+        return beanDefinitionMap;
+    }
+
+    public void setBeanDefinitionMap(Map<String, BeanDefinition> beanDefinitionMap) {
+        this.beanDefinitionMap = beanDefinitionMap;
+    }
+
     public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
         super(registry);
         beanDefinition = new DefaultBeanDefinition();
@@ -54,11 +62,11 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
         beanDefinitionMap= xmlParser.parse();
 //        List packages = xmlParser.getComponentPackageNames();
         // 再次可以选择注入一个什么类
-        for (Entry<String, BeanDefinition> beanDefinition : beanDefinitionMap.entrySet()) {
-            // 講這個bean進行註冊,這是一個藉口方法，當某個容器需要註冊功能的時候，在繼承這個類
-            // key is the name of bean,value is the beanDefinition
-            registry.registerBeanDefinition(beanDefinition.getKey(),beanDefinition.getValue());
-        }
+//        for (Entry<String, BeanDefinition> beanDefinition : beanDefinitionMap.entrySet()) {
+//            // 講這個bean進行註冊,這是一個藉口方法，當某個容器需要註冊功能的時候，在繼承這個類
+//            // key is the name of bean,value is the beanDefinition
+//            registry.registerBeanDefinition(beanDefinition.getKey(),beanDefinition.getValue());
+//        }
         resource.getInputStream().close();
         return beanDefinitionMap.size();
     }

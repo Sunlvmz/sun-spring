@@ -1,24 +1,24 @@
 package com.sunmvc.io.reader;
 
 import com.sunmvc.beans.factory.support.BeanDefinitionRegistry;
+import com.sunmvc.io.source.FileResourceLoader;
 import com.sunmvc.io.source.Resource;
-import com.sunmvc.io.source.ResourceLoader;
 
 public abstract class AbstractBeanDefinitionReader implements BeanDefinitionReader  {//未实现loadBeanDefiniton方法，所以要加abstract修饰
 
     protected final BeanDefinitionRegistry registry ; //
 
 
-    protected ResourceLoader resourceLoader;
+    protected FileResourceLoader fileResourceLoader;
 
     public AbstractBeanDefinitionReader(BeanDefinitionRegistry registry){
         this.registry=registry;
-//        this.resourceLoader = (ResourceLoader)this.registry;
+//        this.fileResourceLoader = (FileResourceLoader)this.registry;
     }
 
-//    public AbstractBeanDefinitionReader(ResourceLoader resourceLoader) {
+//    public AbstractBeanDefinitionReader(FileResourceLoader fileResourceLoader) {
 //        this.registry = registry;
-//        this.resourceLoader = (ResourceLoader) this.registry;
+//        this.fileResourceLoader = (FileResourceLoader) this.registry;
 //    }
     /* (non-Javadoc)
      * @see com.lonton.core.io.BeanDefinitionReader#getBeanDefinitionRegistry()
@@ -30,12 +30,12 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
     }
 
     /* (non-Javadoc)
-     * @see com.lonton.core.io.BeanDefinitionReader#getResourceLoader()
+     * @see com.lonton.core.io.BeanDefinitionReader#getFileResourceLoader()
      */
     @Override
-    public ResourceLoader getResourceLoader() {
+    public FileResourceLoader getFileResourceLoader() {
         // TODO Auto-generated method stub
-        return this.resourceLoader;
+        return this.fileResourceLoader;
     }
 
     /* (non-Javadoc)

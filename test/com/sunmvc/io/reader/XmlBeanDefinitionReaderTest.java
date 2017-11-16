@@ -1,19 +1,13 @@
 package com.sunmvc.io.reader;
 
-import com.sunmvc.beans.definition.BeanDefinition;
 import com.sunmvc.beans.factory.HelloWorldServiceImpl;
 import com.sunmvc.beans.factory.factoryImpl.AutowireCapableBeanFactory;
 import com.sunmvc.beans.factory.factoryImpl.BeanFactory;
-import com.sunmvc.beans.factory.factoryImpl.DefaultBeanFactory;
 import com.sunmvc.io.source.FileResource;
-import com.sunmvc.io.source.ResourceLoader;
 import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.*;
 
 public class XmlBeanDefinitionReaderTest {
 
