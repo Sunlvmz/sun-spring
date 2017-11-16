@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+    <bean id="helloWorldService" class="com.sunmvc.beans.factory.HelloWorldServiceImpl">
+        <property name="text" value="Hello World!"></property>
+        <property name="service" ref="outputService"></property>
+    </bean>
+    <bean id="outputService" class="com.sunmvc.beans.factory.AnotherServiceImpl">
+    </bean>
+    <!-- 将会自动扫描该包下所有注解的bean -->
+    <package-scan packagename="com.sunmvc.beans.factory"></package-scan>
+</beans>
