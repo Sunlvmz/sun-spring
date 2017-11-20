@@ -14,6 +14,6 @@ public interface MethodMatcher {
 	 * @param targetClass
 	 * @return
 	 */
-	boolean matches(Method method, Class targetClass);
+	boolean matches(Method method, Class targetClass,Object[] args);
 	
 }

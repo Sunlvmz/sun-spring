@@ -71,13 +71,13 @@ public class AspectJExpressionPointcut implements Pointcut, ClassFilter, MethodM
 		return this;
 	}
 
-	@Override
+
 	public boolean matches(Class targetClass) {
 		checkReadyToMatch();
 		return pointcutExpression.couldMatchJoinPointsInType(targetClass);
 	}
 
-	@Override
+
 	public boolean matches(Method method, Class targetClass) {
 		checkReadyToMatch();
 		ShadowMatch shadowMatch = pointcutExpression.matchesMethodExecution(method);
@@ -89,5 +89,9 @@ public class AspectJExpressionPointcut implements Pointcut, ClassFilter, MethodM
 		// TODO:其他情况不判断了！见org.springframework.aop.aspectj.RuntimeTestWalker
 		return false;
 	}
-	
+
+	@Override
+	public boolean matches(Method method, Class targetClass, Object[] args) {
+		return false;
+	}
 }
